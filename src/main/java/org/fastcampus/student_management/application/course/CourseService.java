@@ -25,11 +25,24 @@ public class CourseService {
   }
 
   public List<CourseInfoDto> getCourseDayOfWeek(DayOfWeek dayOfWeek) {
-    // TODO: 과제 구현 부분
-    return new ArrayList<>();
+    List<Course> courses =  courseRepository.getCourseDayOfWeek(dayOfWeek);
+//    List<CourseInfoDto> courseInfoDtos = new ArrayList<>();
+//    for (Course course : courses) {
+//      courseInfoDtos.add(new CourseInfoDto(course));
+//    }
+//    return  courseInfoDtos;
+   //람다로 CourseInfoDto로 변환 해서 반환
+
+   return courses.stream().map(CourseInfoDto :: new).toList();
   }
 
   public void changeFee(String studentName, int fee) {
-    // TODO: 과제 구현 부분
+    List<Course> courses = courseRepository.getCourseListByStudent(studentName);
+    Student student = studentService.getStudent(studentName);
+    List<Course> saveTarget = new ArrayList<>();
+    for(Course course : courses) {
+      saveTarget.add(new Course(student,course.getCourseName(), fee,course.getDayOfWeek(),course.getCourseTime()));
+    }
+    courseRepository.saveCourses(saveTarget);
   }
 }

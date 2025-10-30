@@ -16,4 +16,9 @@ public class StudentRepository {
   public Optional<Student> findByName(String name) {
     return Optional.ofNullable(studentMap.get(name));
   }
+  public void updateActive(Student student) {
+    if(studentMap.containsKey(student.getName())) {
+      studentMap.put(student.getName(), student);
+    }
+  }
 }
