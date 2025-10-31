@@ -13,7 +13,7 @@ public class StudentService {
   }
 
   public void saveStudent(StudentInfoDto studentInfoDto) {
-    Student student = new Student(studentInfoDto.getName(), studentInfoDto.getAge(), studentInfoDto.getAddress(), true);
+    Student student = new Student(studentInfoDto.getName(), studentInfoDto.getAge(), studentInfoDto.getAddress());
     studentRepository.save(student);
   }
 
@@ -27,19 +27,20 @@ public class StudentService {
 //            .orElseThrow(() -> new IllegalArgumentException("해당하는 학생이 없습니다."));
     Student target = getStudent(name);
     //이미 활성화 된 상태인 경우
-    if(!target.isActivate()) {
-      Student student = new Student(name, target.getAge(), target.getAddress(), true);
-      studentRepository.updateActive(student);
-    }
+//    if(!target.isActivate()) {
+//      Student student = new Student(name, target.getAge(), target.getAddress(), true);
+//      studentRepository.updateActive(student);
+//    }
+    target.activate();
   }
 
   public void deactivateStudent(String name) {
-    Student target = studentRepository.findByName(name)
-            .orElseThrow(() -> new IllegalArgumentException("해당하는 학생이 없습니다."));
+Student target = getStudent(name);
     //이미 활성화 된 상태인 경우
-    if(target.isActivate()) {
-      Student student = new Student(name, target.getAge(), target.getAddress(), false);
-      studentRepository.updateActive(student);
-    }
+//    if(target.isActivate()) {
+//      Student student = new Student(name, target.getAge(), target.getAddress(), false);
+//      studentRepository.updateActive(student);
+//    }
+    target.deactivate();
   }
 }
