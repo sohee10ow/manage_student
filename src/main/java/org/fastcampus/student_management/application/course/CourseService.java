@@ -38,11 +38,9 @@ public class CourseService {
 
   public void changeFee(String studentName, int fee) {
     List<Course> courses = courseRepository.getCourseListByStudent(studentName);
-    Student student = studentService.getStudent(studentName);
-    List<Course> saveTarget = new ArrayList<>();
     for(Course course : courses) {
-      saveTarget.add(new Course(student,course.getCourseName(), fee,course.getDayOfWeek(),course.getCourseTime()));
+      course.changeFee(fee);
     }
-    courseRepository.saveCourses(saveTarget);
+
   }
 }
